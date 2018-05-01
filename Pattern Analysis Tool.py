@@ -13,6 +13,7 @@ filename = "Higgs_Hunters_data_ALL.csv"
 #Good luck!
 
 def get_distance(dx,dy):
+    #Obtain a Pythagorean distance given two perpendicular components.
     distance = dx**2 + dy**2
     distance = distance ** 0.5
     return distance
@@ -37,7 +38,8 @@ class Click:
         #List of clusters in which this click would belong
         matched_clusters = []
         
-        #Place the click in an appropriate cluster
+        #Decide which cluster to put the click into: if
+        #If
         for cluster in Event.all_events[event_id].click_clusters[projection]:
             for click in cluster:
                 if get_distance(x-click.x,y-click.y) <= 40:             #"40" Determines the radius of tolerance: if there is no click inside this radius, a new cluster will be formed
@@ -59,6 +61,7 @@ class Click:
         else:
             Event.all_events[event_id].click_clusters[projection].append([self])
 
+#Load all clicks from file
 f = open(filename,"r")
 reader = csv.reader(f)
 for row in reader:
@@ -77,11 +80,12 @@ for row in reader:
 
 f.close()
 
-
+#Obtain a list of event IDs
 f = open("Big Data Mod 1.txt","r")
 event_ids = f.readlines()
 f.close()
 
+#Save all data to a new file
 for projection in ["XY","XYzoom","RZzoom"]:
     f = open(projection+".txt","w")
     
